@@ -1,16 +1,6 @@
 #include "track.h"
 #include <sstream>
-#include <cctype>
 using namespace std;
-
-static bool containsInsensitive(const string& s, const string& q)
-{
-    if (q.empty()) return true;
-    string sl = s, ql = q;
-    for (char& c : sl) c = tolower((unsigned char)c);
-    for (char& c : ql) c = tolower((unsigned char)c);
-    return sl.find(ql) != string::npos;
-}
 
 Podcast::Podcast(string title, double duration, double rating, string filename,
                  string host, int episodeNumber, string publishDate)
@@ -23,9 +13,11 @@ Podcast* Podcast::clone() const
     return new Podcast(getTitle(), getDuration(), getRating(), getFilename(), host, episodeNumber, publishDate);
 }
 
+Podcast::~Podcast() = default;
+
 bool Podcast::matches(const string& query) const
 {
-    return Track::matches(query) || containsInsensitive(host, query);
+    return Track::matches(query) || Track::containsInsensitive(host, query);
 }
 
 string Podcast::getInfo() const

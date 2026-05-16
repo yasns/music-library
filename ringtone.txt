@@ -1,0 +1,15 @@
+Ringtone – to be implemented by you! Make the tests (test.cpp) pass.
+
+Ringtone represents a short audio clip used as a phone ringtone. It inherits from Track and adds one field:
+    bool loopable – true if the ringtone should repeat continuously.
+
+Add the class declaration to track.h alongside Song and Podcast, then implement it in ringtone.cpp.
+
+Class layout:
+- field: bool loopable
+- Constructor – title, duration, rating, filename, loopable. Call the Track constructor in the initializer list.
+- = delete copy constructor and assignment operator (clone is provided instead)
+- clone() – return a heap-allocated copy of this object (new Ringtone with the same fields).
+- ~Ringtone() override – explicit virtual destructor, body goes in ringtone.cpp.
+- getInfo() – use ostringstream, include all fields (see Song/Podcast for format examples). The loopable flag must appear as the string "true" or "false", not 1/0.
+- isLoopable() – return the loopable flag.

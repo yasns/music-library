@@ -2,7 +2,7 @@
 #include <cctype>
 using namespace std;
 
-static bool containsInsensitive(const string& s, const string& q)
+bool Track::containsInsensitive(const string& s, const string& q)
 {
     if (q.empty()) return true;
     string sl = s, ql = q;
@@ -10,8 +10,6 @@ static bool containsInsensitive(const string& s, const string& q)
     for (char& c : ql) c = tolower((unsigned char)c);
     return sl.find(ql) != string::npos;
 }
-
-int Track::count = 0;
 
 NotImplementedException::NotImplementedException()
     : runtime_error("not implemented")
@@ -63,6 +61,8 @@ bool Track::operator<(const Track& other) const
 {
     return title < other.title;
 }
+
+int Track::count = 0;
 
 int Track::getCount()
 {

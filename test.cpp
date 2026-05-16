@@ -218,9 +218,6 @@ void testFind()
     assert(lib.find("Nonexistent") == nullptr);
 }
 
-// The following tests require Ringtone to be fully implemented in ringtone.cpp.
-// Define RINGTONE_IMPLEMENTED or compile with -DRINGTONE_IMPLEMENTED to enable.
-#ifdef RINGTONE_IMPLEMENTED
 void testRingtone()
 {
     std::cout << "Testing ringtone...\n";
@@ -252,7 +249,7 @@ void testRingtone()
     assert(info.find("true") != string::npos); // loopable
 
     string info2 = lib.get(1)->getInfo();
-    assert(!info2.empty());
+assert(!info2.empty());
     assert(info2.find("Ringtone") != string::npos);
     assert(info2.find("Marimba") != string::npos);
     assert(info2.find("marimba.mp3") != string::npos);
@@ -264,7 +261,6 @@ void testRingtone()
     assert(copy.get(0) != lib.get(0));
     assert(copy.get(0)->getTitle() == "Nokia Tune");
 }
-#endif
 
 int main()
 {
@@ -278,9 +274,7 @@ int main()
         testPolymorphism();
         testPrototype();
         testFind();
-#ifdef RINGTONE_IMPLEMENTED
         testRingtone();
-#endif
         cout << "all tests passed\n";
     } catch (...) {
         cout << "unexpected exception\n";

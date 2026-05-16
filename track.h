@@ -33,6 +33,8 @@ public:
     std::string getFilename() const;
     bool operator<(const Track& other) const; // compares by title
     static int getCount(); // number of Track instances currently alive (for leak detection)
+protected:
+    static bool containsInsensitive(const std::string& s, const std::string& q);
 };
 
 // A music track with artist, album, year, genre, and play count.
@@ -45,7 +47,10 @@ class Song : public Track {
 public:
     Song(std::string title, double duration, double rating, std::string filename,
          std::string artist, std::string album, int year, std::string genre, int playCount);
+    Song(const Song&) = delete;
+    Song& operator=(const Song&) = delete;
     Song* clone() const override;
+    ~Song() override;
     bool matches(const std::string& query) const override;
     std::string getInfo() const override;
     void incrementPlayCount();
@@ -64,7 +69,10 @@ class Podcast : public Track {
 public:
     Podcast(std::string title, double duration, double rating, std::string filename,
             std::string host, int episodeNumber, std::string publishDate);
+    Podcast(const Podcast&) = delete;
+    Podcast& operator=(const Podcast&) = delete;
     Podcast* clone() const override;
+    ~Podcast() override;
     bool matches(const std::string& query) const override;
     std::string getInfo() const override;
     std::string getHost() const;
@@ -72,13 +80,4 @@ public:
     std::string getPublishDate() const;
 };
 
-// A short loopable audio clip used as a ringtone. Declared here, implementation is in ringtone.cpp.
-class Ringtone : public Track {
-    bool loopable;
-public:
-    Ringtone(std::string title, double duration, double rating, std::string filename, bool loopable);
-    Ringtone* clone() const override;
-    bool isLoopable() const;
-    std::string getInfo() const override;
-};
 #endif

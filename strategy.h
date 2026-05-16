@@ -12,7 +12,7 @@ enum class TrackType { Song, Podcast, Ringtone };
 // Set the desired strategy via MusicLibrary::setStrategy(), then call sort().
 class SortStrategy {
 public:
-    SortStrategy() = default;
+    SortStrategy();
     SortStrategy(const SortStrategy&) = delete;
     SortStrategy& operator=(const SortStrategy&) = delete;
     virtual ~SortStrategy();
@@ -22,31 +22,35 @@ public:
 // Sorts tracks alphabetically by title.
 class SortByTitle : public SortStrategy {
 public:
+    ~SortByTitle() override;
     void sort(std::vector<Track*>& tracks) const override;
 };
 
 // Sorts tracks by duration, shortest first.
 class SortByDuration : public SortStrategy {
 public:
+    ~SortByDuration() override;
     void sort(std::vector<Track*>& tracks) const override;
 };
 
 // Sorts tracks by rating, highest first.
 class SortByRating : public SortStrategy {
 public:
+    ~SortByRating() override;
     void sort(std::vector<Track*>& tracks) const override;
 };
 
 // Shuffles tracks into a random order.
 class SortByRandom : public SortStrategy {
 public:
+    ~SortByRandom() override;
     void sort(std::vector<Track*>& tracks) const override;
 };
 
 // Callback pattern: passed to MusicLibrary::filter() to select tracks by arbitrary criteria.
 class FilterCallback {
 public:
-    FilterCallback() = default;
+    FilterCallback();
     FilterCallback(const FilterCallback&) = delete;
     FilterCallback& operator=(const FilterCallback&) = delete;
     virtual ~FilterCallback();
@@ -58,6 +62,7 @@ class FilterByMinDuration : public FilterCallback {
     double minDuration;
 public:
     FilterByMinDuration(double minDuration);
+    ~FilterByMinDuration() override;
     bool operator()(const Track* track) const override;
 };
 
@@ -66,6 +71,7 @@ class FilterByMinRating : public FilterCallback {
     double minRating;
 public:
     FilterByMinRating(double minRating);
+    ~FilterByMinRating() override;
     bool operator()(const Track* track) const override;
 };
 
@@ -74,6 +80,7 @@ class FilterByType : public FilterCallback {
     TrackType type;
 public:
     FilterByType(TrackType type);
+    ~FilterByType() override;
     bool operator()(const Track* track) const override;
 };
 #endif

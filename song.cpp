@@ -1,16 +1,6 @@
 #include "track.h"
 #include <sstream>
-#include <cctype>
 using namespace std;
-
-static bool containsInsensitive(const string& s, const string& q)
-{
-    if (q.empty()) return true;
-    string sl = s, ql = q;
-    for (char& c : sl) c = tolower((unsigned char)c);
-    for (char& c : ql) c = tolower((unsigned char)c);
-    return sl.find(ql) != string::npos;
-}
 
 Song::Song(string title, double duration, double rating, string filename,
            string artist, string album, int year, string genre, int playCount)
@@ -23,12 +13,14 @@ Song* Song::clone() const
     return new Song(getTitle(), getDuration(), getRating(), getFilename(), artist, album, year, genre, playCount);
 }
 
+Song::~Song() = default;
+
 bool Song::matches(const string& query) const
 {
     return Track::matches(query)
-        || containsInsensitive(artist, query)
-        || containsInsensitive(album, query)
-        || containsInsensitive(genre, query);
+        || Track::containsInsensitive(artist, query)
+        || Track::containsInsensitive(album, query)
+        || Track::containsInsensitive(genre, query);
 }
 
 string Song::getInfo() const
