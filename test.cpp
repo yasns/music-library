@@ -7,6 +7,7 @@ using namespace std;
 
 void testCRUD()
 {
+    cout << "Testing CRUD...\n";
     MusicLibrary lib;
     lib.add(new Song("A", 120.0, 4.0, "a.mp3", "Artist", "Album", 2020, "Pop", 100));
     lib.add(new Podcast("B", 3600.0, 4.5, "b.mp3", "Host", 1, "2024-01-01"));
@@ -26,6 +27,7 @@ void testCRUD()
 
 void testDeepCopy()
 {
+    cout << "Testing deep copy...\n";
     MusicLibrary lib;
     lib.add(new Song("Original", 200.0, 4.0, "original.mp3", "A", "B", 2000, "C", 10));
 
@@ -46,6 +48,7 @@ void testDeepCopy()
 
 void testStrategy()
 {
+    cout << "Testing sorting...\n";
     MusicLibrary lib;
     lib.add(new Song("Zebra", 100.0, 3.0, "zebra.mp3", "A", "B", 2000, "C", 0));
     lib.add(new Song("Apple", 300.0, 5.0, "apple.mp3", "A", "B", 2000, "C", 0));
@@ -89,6 +92,7 @@ void testStrategy()
 
 void testFilter()
 {
+    cout << "Testing filtering...\n";
     MusicLibrary lib;
     lib.add(new Song("Short", 60.0, 3.0, "short.mp3", "A", "B", 2000, "C", 0));
     lib.add(new Song("Long", 400.0, 4.5, "long.mp3", "A", "B", 2000, "C", 0));
@@ -115,6 +119,7 @@ void testFilter()
 
 void testGetAllInfo()
 {
+    cout << "Testing getAllInfo...\n";
     MusicLibrary lib;
     lib.add(new Song("S", 120.0, 4.0, "s.mp3", "A", "B", 2000, "C", 10));
     lib.add(new Podcast("P", 3600.0, 4.5, "p.mp3", "H", 1, "2024-01-01"));
@@ -126,6 +131,7 @@ void testGetAllInfo()
 
 void testIterator()
 {
+    cout << "Testing iterator...\n";
     MusicLibrary lib;
     lib.add(new Song("A", 100.0, 5.0, "a.mp3", "X", "Y", 2000, "Z", 0));
     lib.add(new Song("B", 200.0, 3.0, "b.mp3", "X", "Y", 2000, "Z", 0));
@@ -150,6 +156,7 @@ void testIterator()
 
 void testPolymorphism()
 {
+    cout << "Testing polymorphism...\n";
     MusicLibrary lib;
     lib.add(new Song("S", 200.0, 4.0, "s.mp3", "A", "B", 2000, "Pop", 5));
     lib.add(new Podcast("P", 3600.0, 4.5, "p.mp3", "H", 1, "2024-01-01"));
@@ -175,6 +182,7 @@ void testPolymorphism()
 
 void testPrototype()
 {
+    cout << "Testing prototype...\n";
     Song* original = new Song("X", 100.0, 4.0, "x.mp3", "A", "B", 2000, "C", 1);
     Track* cloned = original->clone();
 
@@ -195,6 +203,7 @@ void testPrototype()
 
 void testFind()
 {
+    cout << "Testing find...\n";
     MusicLibrary lib;
     lib.add(new Song("Imagine", 187.0, 4.9, "imagine.mp3", "John Lennon", "Imagine", 1971, "Rock", 0));
     lib.add(new Podcast("Lex Fridman #400", 7200.0, 4.7, "lex_fridman_400.mp3", "Lex Fridman", 400, "2024-03-15"));
@@ -210,10 +219,11 @@ void testFind()
 }
 
 // The following tests require Ringtone to be fully implemented in ringtone.cpp.
-// Compile with -DRINGTONE_IMPLEMENTED to enable.
+// Define RINGTONE_IMPLEMENTED or compile with -DRINGTONE_IMPLEMENTED to enable.
 #ifdef RINGTONE_IMPLEMENTED
 void testRingtone()
 {
+    std::cout << "Testing ringtone...\n";
     MusicLibrary lib;
     lib.add(new Ringtone("Nokia Tune", 5.0, 3.5, "nokia_tune.mp3", true));
     lib.add(new Ringtone("Marimba", 3.0, 4.0, "marimba.mp3", false));
@@ -234,6 +244,20 @@ void testRingtone()
 
     string info = lib.get(0)->getInfo();
     assert(!info.empty());
+    assert(info.find("Ringtone") != string::npos);
+    assert(info.find("Nokia Tune") != string::npos);
+    assert(info.find("nokia_tune.mp3") != string::npos);
+    assert(info.find("5") != string::npos);   // duration
+    assert(info.find("3.5") != string::npos); // rating
+    assert(info.find("true") != string::npos); // loopable
+
+    string info2 = lib.get(1)->getInfo();
+    assert(!info2.empty());
+    assert(info2.find("Ringtone") != string::npos);
+    assert(info2.find("Marimba") != string::npos);
+    assert(info2.find("marimba.mp3") != string::npos);
+    assert(info2.find("4") != string::npos);  // rating
+    assert(info2.find("false") != string::npos); // loopable
 
     MusicLibrary copy = lib;
     assert(copy.size() == 2);

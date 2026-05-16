@@ -12,7 +12,7 @@ struct NotImplementedException : public std::runtime_error {
 };
 
 // Abstract base for all audio tracks. Concrete type is preserved via clone() (Prototype pattern).
-// Subclasses override getInfo() to describe themselves; the base implementation throws NotImplementedException.
+// Subclasses override getInfo() to describe themselves, the base implementation throws NotImplementedException.
 class Track {
     std::string title;
     double duration;
@@ -72,12 +72,13 @@ public:
     std::string getPublishDate() const;
 };
 
-// A short loopable audio clip used as a ringtone. Declared here; implementation is in ringtone.cpp.
+// A short loopable audio clip used as a ringtone. Declared here, implementation is in ringtone.cpp.
 class Ringtone : public Track {
     bool loopable;
 public:
     Ringtone(std::string title, double duration, double rating, std::string filename, bool loopable);
     Ringtone* clone() const override;
     bool isLoopable() const;
+    std::string getInfo() const override;
 };
 #endif
